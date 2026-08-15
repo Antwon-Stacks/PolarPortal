@@ -31,12 +31,13 @@
                 <span class="text-2xl font-black tracking-wider text-[#00f2fe]">🧊 ICED ETHER</span>
             </div>
             
+            <!-- Full Navigation Menu -->
             <nav class="flex flex-wrap justify-center gap-6 text-sm font-bold text-[#A0AEC0]">
-                <button onclick="showPage('portal')" id="nav-portal" class="text-[#00f2fe] hover:text-white transition">Polar Portal</button>
-                <button onclick="showPage('dashboard')" id="nav-dashboard" class="hover:text-white transition">Dual Pool Dashboard</button>
-                <button onclick="showPage('tokenomics')" id="nav-tokenomics" class="hover:text-white transition">Tokenomics</button>
-                <button onclick="showPage('stats')" id="nav-stats" class="hover:text-white transition">Statistics</button>
-                <button onclick="showPage('about')" id="nav-about" class="hover:text-white transition">About the Project</button>
+                <button onclick="showPage('portal')" id="nav-portal" class="text-[#00f2fe] hover:text-white transition font-bold">Polar Portal</button>
+                <button onclick="showPage('dashboard')" id="nav-dashboard" class="hover:text-white transition font-bold">Dual Pool Dashboard</button>
+                <button onclick="showPage('tokenomics')" id="nav-tokenomics" class="hover:text-white transition font-bold">Tokenomics</button>
+                <button onclick="showPage('stats')" id="nav-stats" class="hover:text-white transition font-bold">Statistics</button>
+                <button onclick="showPage('about')" id="nav-about" class="hover:text-white transition font-bold">About the Project</button>
             </nav>
 
             <button id="walletBtn" onclick="toggleWallet()" class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold px-5 py-2.5 rounded-xl shadow-lg hover:opacity-90 transition text-xs">
@@ -190,7 +191,6 @@
 
                 <!-- CLAIM VIEW -->
                 <div id="portal-claim" class="space-y-6 hidden">
-                    <!-- Wallet Verification & Sync Banner -->
                     <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 flex justify-between items-center">
                         <div>
                             <div class="text-xs text-[#A0AEC0] font-bold">Registered Web3 Address</div>
@@ -201,31 +201,26 @@
                         </span>
                     </div>
 
-                    <!-- Unclaimed Token Card -->
                     <div class="bg-[#050B14] border border-[#233550] rounded-2xl p-6 text-center relative overflow-hidden">
                         <div class="text-xs text-[#A0AEC0] font-bold uppercase tracking-wider">Unclaimed GlacierPlay Arcade Balance</div>
                         <div class="text-3xl font-extrabold text-[#00f2fe] my-2 tracking-tight">
                             124.5000 <span class="text-lg text-white">$ICED</span>
                         </div>
                         
-                        <!-- Dynamic USD Oracle Valuation -->
                         <div class="inline-block bg-[#121C2B] border border-[#233550] px-3 py-1 rounded-full text-xs font-bold text-amber-400 my-1">
                             ≈ $391.12 USD <span class="text-[10px] text-[#A0AEC0] font-normal">(Oracle Rate: $3.1415/ICED)</span>
                         </div>
 
-                        <!-- Gas Responsibility Breakdown -->
                         <div class="mt-4 pt-4 border-t border-[#233550] flex justify-between items-center text-xs text-[#CBD5E1]">
                             <span>Estimated Network Gas:</span>
                             <span class="font-mono text-[#A0AEC0]">~0.0021 ETH</span>
                         </div>
 
-                        <!-- Execute Claim Button -->
                         <button onclick="alert('Claim submitted to Web3 wallet!')" class="w-full mt-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold py-3.5 rounded-xl text-sm shadow-xl hover:opacity-95 transition">
                             CLAIM $ICED TOKENS
                         </button>
                     </div>
 
-                    <!-- On-Chain NFT Permit Minting Section -->
                     <div>
                         <div class="text-xs font-bold text-[#E2E8F0] mb-3 flex justify-between items-center">
                             <span>Reserved On-Chain NFT Permits</span>
@@ -261,7 +256,6 @@
                         </div>
                     </div>
 
-                    <!-- Security & Gas Policy Notice -->
                     <div class="bg-[#050B14]/60 border border-[#233550] rounded-xl p-4 text-[11px] text-[#CBD5E1] space-y-1.5">
                         <p class="font-bold text-[#00f2fe] mb-1">ℹ️ Claiming Guidelines:</p>
                         <p>• <strong>Gas Responsibility:</strong> Users execute on-chain transactions and cover network gas fees directly via their Web3 wallet.</p>
@@ -334,7 +328,6 @@
                 <p class="text-sm text-[#A0AEC0]">Built on a mathematical foundation governed by the 3.14 constant.</p>
             </div>
 
-            <!-- Top Summary Grid -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="ice-card p-5 text-center">
                     <div class="text-xs font-bold text-[#A0AEC0] uppercase">Initial Supply</div>
@@ -361,9 +354,7 @@
                 </div>
             </div>
 
-            <!-- Detailed Technical Breakdown -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Minting Mechanics -->
                 <div class="ice-card p-6 space-y-3">
                     <h3 class="text-base font-black text-[#00f2fe]">1. Minting Mechanics</h3>
                     <p class="text-xs text-[#CBD5E1] leading-relaxed">
@@ -374,7 +365,6 @@
                     </p>
                 </div>
 
-                <!-- Avalanche System -->
                 <div class="ice-card p-6 space-y-3">
                     <h3 class="text-base font-black text-[#00f2fe]">2. Avalanche Rebalance</h3>
                     <p class="text-xs text-[#CBD5E1] leading-relaxed">
@@ -385,7 +375,6 @@
                     </p>
                 </div>
 
-                <!-- Yield Management -->
                 <div class="ice-card p-6 space-y-3">
                     <h3 class="text-base font-black text-[#00f2fe]">3. Yield Management & Burning</h3>
                     <p class="text-xs text-[#CBD5E1] leading-relaxed">
@@ -433,7 +422,6 @@
                 </div>
             </div>
 
-            <!-- Iceberg Growth Box -->
             <div class="ice-card p-6 text-center max-w-lg mx-auto space-y-3">
                 <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Iceberg Growth Index</div>
                 <div class="text-4xl font-black text-[#00f2fe]">+31.4%</div>
@@ -442,7 +430,7 @@
         </section>
 
         <!-- ========================================================================= -->
-        <!-- 5. ABOUT THE PROJECT -->
+        <!-- 5. ABOUT THE PROJECT (NAV SCREEN & RUN THE NUMBERS) -->
         <!-- ========================================================================= -->
         <section id="page-about" class="space-y-8 hidden">
             <div class="text-center max-w-3xl mx-auto space-y-3">
@@ -715,12 +703,14 @@
             pages.forEach(p => {
                 const el = document.getElementById(`page-${p}`);
                 const nav = document.getElementById(`nav-${p}`);
-                if (p === pageId) {
-                    el.classList.remove('hidden');
-                    if(nav) nav.className = "text-[#00f2fe] hover:text-white transition font-bold";
-                } else {
-                    el.classList.add('hidden');
-                    if(nav) nav.className = "hover:text-white transition font-bold";
+                if (el) {
+                    if (p === pageId) {
+                        el.classList.remove('hidden');
+                        if (nav) nav.className = "text-[#00f2fe] hover:text-white transition font-bold";
+                    } else {
+                        el.classList.add('hidden');
+                        if (nav) nav.className = "hover:text-white transition font-bold";
+                    }
                 }
             });
         }
