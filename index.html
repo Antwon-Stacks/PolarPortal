@@ -3,245 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polar Portal dApp</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Iced Ether — ICE DashBoard</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050B14; color: #FFFFFF; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+        body {
+            background-color: #050B14;
+            color: #FFFFFF;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        .ice-card {
+            background: #121C2B;
+            border: 1px solid #233550;
+            border-radius: 16px;
+        }
+        .ice-[#00f2fe] {
+            color: #00f2fe;
+        }
+        .glow-box {
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
     </style>
 </head>
-<body class="min-h-screen p-4 sm:p-6">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- App Header -->
-    <header class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 border-b border-[#233550] pb-4">
-        <div class="flex items-center gap-3">
-            <span class="text-2xl font-extrabold text-[#00f2fe] tracking-wide">🧊 POLAR PORTAL</span>
+    <!-- Top Navigation Header -->
+    <header class="border-b border-[#233550] bg-[#050B14]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('portal')">
+                <span class="text-2xl font-black tracking-wider text-[#00f2fe]">🧊 ICED ETHER</span>
+            </div>
+            
+            <nav class="flex flex-wrap justify-center gap-6 text-sm font-bold text-[#A0AEC0]">
+                <button onclick="showPage('portal')" id="nav-portal" class="text-[#00f2fe] hover:text-white transition">Polar Portal</button>
+                <button onclick="showPage('dashboard')" id="nav-dashboard" class="hover:text-white transition">Dual Pool Dashboard</button>
+                <button onclick="showPage('tokenomics')" id="nav-tokenomics" class="hover:text-white transition">Tokenomics</button>
+                <button onclick="showPage('stats')" id="nav-stats" class="hover:text-white transition">Statistics</button>
+                <button onclick="openAboutModal()" class="hover:text-white transition">About the Project</button>
+            </nav>
+
+            <button id="walletBtn" onclick="toggleWallet()" class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold px-5 py-2.5 rounded-xl shadow-lg hover:opacity-90 transition text-xs">
+                Connect Wallet
+            </button>
         </div>
-        <nav class="flex gap-6 text-sm text-[#A0AEC0] font-semibold">
-            <button onclick="switchTab('claim')" id="nav-claim" class="text-[#00f2fe] hover:text-white">Claim Portal</button>
-            <button onclick="switchTab('mint')" id="nav-mint" class="hover:text-white">Mint</button>
-            <button onclick="switchTab('swap')" id="nav-swap" class="hover:text-white">Swap</button>
-            <button onclick="switchTab('bridge')" id="nav-bridge" class="hover:text-white">Bridge</button>
-        </nav>
-        <button id="connectBtn" onclick="toggleWallet()" class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-bold px-5 py-2.5 rounded-xl shadow-lg hover:opacity-90 transition text-xs font-mono">
-            0x71C7...8976F
-        </button>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-xl mx-auto bg-[#121C2B] border border-[#233550] rounded-2xl p-6 shadow-2xl">
-        
-        <!-- Navigation Tabs -->
-        <div class="flex bg-[#050B14] p-1 rounded-xl mb-6 border border-[#233550]">
-            <button onclick="switchTab('claim')" id="tab-claim" class="flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] shadow-md">🎁 Claim</button>
-            <button onclick="switchTab('mint')" id="tab-mint" class="flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Mint</button>
-            <button onclick="switchTab('swap')" id="tab-swap" class="flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Swap</button>
-            <button onclick="switchTab('bridge')" id="tab-bridge" class="flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Bridge</button>
-        </div>
+    <!-- MAIN APP CONTENT CONTAINERS -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
-        <!-- ================= CLAIM TAB ================= -->
-        <div id="view-claim" class="space-y-5">
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 flex justify-between items-center">
-                <div>
-                    <div class="text-xs text-[#A0AEC0] font-bold">Registered Mobile Address</div>
-                    <div class="text-xs font-mono text-[#00f2fe] mt-0.5" id="displayAddr">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</div>
-                </div>
-                <span class="bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-[10px] font-extrabold px-2.5 py-1 rounded-md">
-                    ✓ SYNCED
-                </span>
-            </div>
-
-            <!-- Unclaimed Token Card -->
-            <div class="bg-gradient-to-b from-[#1A293E] to-[#050B14] border border-[#00f2fe]/40 rounded-2xl p-6 text-center relative overflow-hidden shadow-lg">
-                <div class="text-xs text-[#A0AEC0] font-bold uppercase tracking-wider">Unclaimed Mobile Arcade Balance</div>
-                <div class="text-3xl font-extrabold text-[#00f2fe] my-2 tracking-tight">
-                    124.5000 <span class="text-lg text-white">$ICED</span>
-                </div>
-                
-                <div class="inline-block bg-[#121C2B] border border-[#233550] px-3 py-1 rounded-full text-xs font-bold text-amber-400 my-1">
-                    ≈ $391.12 USD <span class="text-[10px] text-[#A0AEC0] font-normal">(Oracle Rate: $3.1415/ICED)</span>
+        <!-- ========================================================================= -->
+        <!-- 1. POLAR PORTAL (SWAP / BRIDGE / MINT) -->
+        <!-- ========================================================================= -->
+        <section id="page-portal" class="space-y-8">
+            <div class="max-w-3xl mx-auto ice-card p-6 md:p-8 glow-box">
+                <!-- Sub Navigation Tabs -->
+                <div class="flex bg-[#050B14] p-1.5 rounded-xl mb-8 border border-[#233550]">
+                    <button onclick="switchPortalTab('mint')" id="tab-mint" class="flex-1 py-3 text-sm font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14]">Mint</button>
+                    <button onclick="switchPortalTab('swap')" id="tab-swap" class="flex-1 py-3 text-sm font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Swap</button>
+                    <button onclick="switchPortalTab('bridge')" id="tab-bridge" class="flex-1 py-3 text-sm font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Bridge</button>
                 </div>
 
-                <div class="mt-4 pt-4 border-t border-[#233550] flex justify-between items-center text-xs text-[#CBD5E1]">
-                    <span>Estimated Network Gas Fee:</span>
-                    <span class="font-mono text-[#A0AEC0]">~0.0021 ETH</span>
-                </div>
-
-                <button onclick="alert('Signature payload generated! Connect Web3 wallet on live contract to execute claim.')" class="w-full mt-4 bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold py-3.5 rounded-xl text-sm shadow-xl hover:opacity-95 transition">
-                    CLAIM $ICED TOKENS
-                </button>
-            </div>
-
-            <!-- Reserved NFT Permits -->
-            <div>
-                <div class="text-xs font-bold text-[#E2E8F0] mb-3 flex justify-between items-center">
-                    <span>Reserved On-Chain NFT Permits</span>
-                    <span class="text-[10px] text-[#A0AEC0]">Earned via Mobile Arcade Keys</span>
-                </div>
-
-                <div class="space-y-3">
-                    <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">🛡️</span>
-                            <div>
-                                <div class="text-sm font-bold text-white">Glacier Arcade Badge</div>
-                                <div class="text-[11px] text-[#A0AEC0]">Permit Status: <span class="text-[#00f2fe] font-semibold">Eligible to Mint</span></div>
+                <!-- MINT VIEW -->
+                <div id="portal-mint" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left: Input Form -->
+                        <div class="space-y-4">
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                                <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                    <span>You Pay</span>
+                                    <span>$0.00 USD</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <input type="number" placeholder="0.00" class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
+                                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ETH</span>
+                                </div>
                             </div>
-                        </div>
-                        <button onclick="alert('Minting Glacier Arcade Badge NFT...')" class="bg-[#121C2B] border border-[#00f2fe] text-[#00f2fe] hover:bg-[#00f2fe] hover:text-[#050B14] font-bold px-4 py-2 rounded-lg text-xs transition">
-                            Mint NFT
-                        </button>
-                    </div>
 
-                    <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">🔑</span>
-                            <div>
-                                <div class="text-sm font-bold text-white">Iceberg Access Key NFT</div>
-                                <div class="text-[11px] text-[#A0AEC0]">Permit Status: <span class="text-[#00f2fe] font-semibold">Eligible to Mint</span></div>
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                                <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                    <span>You Receive</span>
+                                    <span>$0.00 USD</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <input type="number" placeholder="0.00" readonly class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
+                                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ICED</span>
+                                </div>
                             </div>
+
+                            <button onclick="alert('Minting submitted!')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black py-4 rounded-xl text-base shadow-lg hover:opacity-95 transition">
+                                SUBMIT MINT
+                            </button>
                         </div>
-                        <button onclick="alert('Minting Iceberg Access Key NFT...')" class="bg-[#121C2B] border border-[#00f2fe] text-[#00f2fe] hover:bg-[#00f2fe] hover:text-[#050B14] font-bold px-4 py-2 rounded-lg text-xs transition">
-                            Mint NFT
-                        </button>
+
+                        <!-- Right: Minting Rules -->
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-3">
+                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Minting Rules</h4>
+                            <p>1. Only 3.14% of the total supply can be minted in a 24-hour period.</p>
+                            <p>2. There is a 31.4-hour time lock for swaps and transfers on all newly minted tokens.</p>
+                            <p>3. 3.14% swap fee is waived.</p>
+                            <p>4. Receive a bonus 3.14% of the tokens in addition to the tokens you purchase.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="bg-[#050B14]/60 border border-[#233550] rounded-xl p-4 text-[11px] text-[#CBD5E1] space-y-1.5">
-                <p class="font-bold text-[#00f2fe] mb-1">ℹ️ Claiming Guidelines:</p>
-                <p>• <strong>Gas Responsibility:</strong> Users execute on-chain transactions and cover network gas fees directly via their Web3 wallet.</p>
-                <p>• <strong>Dynamic Oracle Pricing:</strong> USD values are recalculated in real time at execution based on Uniswap TWAP oracle feeds.</p>
-                <p>• <strong>Sync Safeguard:</strong> Modifying your mobile receive address enforces a 24-hour waiting period before claims unlock.</p>
-            </div>
-        </div>
+                <!-- SWAP VIEW -->
+                <div id="portal-swap" class="space-y-6 hidden">
+                    <div class="max-w-md mx-auto space-y-4">
+                        <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                            <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                <span>From</span>
+                                <span>$0.00 USD</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <input type="number" placeholder="0.00" class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
+                                <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ETH</span>
+                            </div>
+                        </div>
 
-        <!-- ================= MINT TAB ================= -->
-        <div id="view-mint" class="space-y-4 hidden">
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="flex justify-between text-xs text-[#A0AEC0] mb-2 font-bold">
-                    <span>You Pay</span>
-                    <span>$0.00 USD</span>
+                        <div class="text-center text-[#00f2fe] font-bold">⬇️</div>
+
+                        <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                            <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                <span>Receive</span>
+                                <span>$0.00 USD</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <input type="number" placeholder="0.00" readonly class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
+                                <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ICED</span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-[#A0AEC0] text-center font-semibold">Standard 3.14% fee applies on swaps and transfers.</div>
+
+                        <button onclick="alert('Swap submitted!')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black py-4 rounded-xl text-base shadow-lg hover:opacity-95 transition">
+                            SUBMIT SWAP
+                        </button>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <input type="number" placeholder="0.00" class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
-                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ETH</span>
+
+                <!-- BRIDGE VIEW -->
+                <div id="portal-bridge" class="space-y-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left: Input Form -->
+                        <div class="space-y-4">
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                                <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                    <span>Bridge From</span>
+                                    <span>$0.00 USD</span>
+                                </div>
+                                <div class="flex justify-between items-center gap-2">
+                                    <input type="number" placeholder="0.00" class="bg-transparent text-xl font-bold text-white outline-none w-1/2">
+                                    <select class="bg-[#121C2B] border border-[#233550] px-2 py-1.5 rounded-lg text-xs font-bold text-[#00f2fe] outline-none">
+                                        <option>ETH</option>
+                                        <option>Matic</option>
+                                        <option>Base</option>
+                                        <option>BNB</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                                <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
+                                    <span>Bridge To</span>
+                                    <span>$0.00 USD</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <input type="number" placeholder="0.00" readonly class="bg-transparent text-xl font-bold text-white outline-none w-1/2">
+                                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-xs font-bold text-[#00f2fe]">ICED</span>
+                                </div>
+                            </div>
+
+                            <button onclick="alert('Bridge submitted!')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black py-4 rounded-xl text-base shadow-lg hover:opacity-95 transition">
+                                SUBMIT BRIDGE
+                            </button>
+                        </div>
+
+                        <!-- Right: Bridging Basics -->
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-2.5">
+                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Bridging Basics</h4>
+                            <p>1. ETH is the project's home chain.</p>
+                            <p>2. When you bridge from ETH, your tokens are locked in the bridge contract.</p>
+                            <p>3. The same number of tokens that you locked are minted on the new chain.</p>
+                            <p>4. The tokens on the new chain can be traded on that chain until someone bridges them back to ETH.</p>
+                            <p>5. At that point, the tokens on the new chain are burned, and the ETH tokens are unlocked from the bridge contract.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 2. DUAL POOL DASHBOARD -->
+        <!-- ========================================================================= -->
+        <section id="page-dashboard" class="space-y-8 hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-black text-[#00f2fe]">A Dual Pool System</h2>
+                <p class="text-sm text-[#A0AEC0]">Real-time balance tracking, yield melt status, and automated avalanche rebalancing metrics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- StETH in Iceberg -->
+                <div class="ice-card p-6 space-y-4">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase tracking-wider">StETH in the Iceberg</div>
+                    <div class="text-4xl font-black text-[#00f2fe]">1,000 <span class="text-lg text-white">StETH</span></div>
+                    <p class="text-xs text-[#CBD5E1]">Stores stETH accumulated from minting deposits and ad revenue allocations.</p>
+                </div>
+
+                <!-- ETH in LP -->
+                <div class="ice-card p-6 space-y-4">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase tracking-wider">ETH in Liquidity Pool</div>
+                    <div class="text-4xl font-black text-[#00f2fe]">500 <span class="text-lg text-white">ETH</span></div>
+                    <p class="text-xs text-[#CBD5E1]">Provides decentralized liquidity paired with $ICED on mainnet dex pools.</p>
                 </div>
             </div>
 
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="flex justify-between text-xs text-[#A0AEC0] mb-2 font-bold">
-                    <span>You Receive (Includes 3.14% Bonus)</span>
-                    <span>$0.00 USD</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Avalanche Trigger Progress -->
+                <div class="ice-card p-6 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-extrabold text-[#A0AEC0] uppercase">Avalanche Trigger Progress</span>
+                        <span class="text-xs font-bold text-[#00f2fe]">50%</span>
+                    </div>
+                    <div class="w-full bg-[#050B14] h-3 rounded-full overflow-hidden border border-[#233550]">
+                        <div class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] h-full" style="width: 50%;"></div>
+                    </div>
+                    <p class="text-xs text-[#CBD5E1]">Avalanche triggers automatically when ETH in LP reaches <strong class="text-[#00f2fe]">31.4%</strong> of StETH in the Iceberg.</p>
                 </div>
-                <div class="flex justify-between items-center">
-                    <input type="number" placeholder="0.00" readonly class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
-                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ICED</span>
-                </div>
-            </div>
 
-            <div class="bg-[#050B14]/60 border border-[#233550] rounded-xl p-4 text-xs text-[#CBD5E1] space-y-1.5">
-                <p class="font-bold text-[#00f2fe]">📜 Minting Rules:</p>
-                <p>1. Max 3.14% of total supply can be minted in a 24-hour window.</p>
-                <p>2. Enforces a 31.4-hour timelock on newly minted tokens.</p>
-                <p>3. 3.14% swap fee is waived + receive a 3.14% bonus allocation.</p>
-            </div>
-
-            <button onclick="alert('Executing Mint Transaction...')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold py-3.5 rounded-xl text-sm shadow-xl hover:opacity-95 transition">
-                MINT $ICED TOKENS
-            </button>
-        </div>
-
-        <!-- ================= SWAP TAB ================= -->
-        <div id="view-swap" class="space-y-4 hidden">
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="flex justify-between text-xs text-[#A0AEC0] mb-2 font-bold">
-                    <span>You Pay</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <input type="number" placeholder="0.00" class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
-                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ETH</span>
+                <!-- Yield Melt Progress -->
+                <div class="ice-card p-6 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-extrabold text-[#A0AEC0] uppercase">Yield Melt Status</span>
+                        <span class="text-xs font-bold text-[#00f2fe]">.0628 of .314 ETH</span>
+                    </div>
+                    <div class="w-full bg-[#050B14] h-3 rounded-full overflow-hidden border border-[#233550]">
+                        <div class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] h-full" style="width: 20%;"></div>
+                    </div>
+                    <p class="text-xs text-[#CBD5E1]">Yield flows into the LP automatically once <strong class="text-[#00f2fe]">.314 ETH</strong> is accumulated.</p>
                 </div>
             </div>
+        </section>
 
-            <div class="text-center font-bold text-[#00f2fe]">⬇️</div>
+        <!-- ========================================================================= -->
+        <!-- 3. TOKENOMICS -->
+        <!-- ========================================================================= -->
+        <section id="page-tokenomics" class="space-y-8 hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-black text-[#00f2fe]">Tokenomics Overview</h2>
+                <p class="text-sm text-[#A0AEC0]">Built on a mathematical foundation governed by the 3.14 constant.</p>
+            </div>
 
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="flex justify-between text-xs text-[#A0AEC0] mb-2 font-bold">
-                    <span>You Receive</span>
+            <!-- Top Summary Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="ice-card p-5 text-center">
+                    <div class="text-xs font-bold text-[#A0AEC0] uppercase">Initial Supply</div>
+                    <div class="text-xl font-black text-[#00f2fe] mt-1">3.14 Trillion</div>
+                    <div class="text-[10px] text-gray-400 mt-1">Fluctuates with Mint & Burn</div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <input type="number" placeholder="0.00" readonly class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
-                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">ICED</span>
+
+                <div class="ice-card p-5 text-center">
+                    <div class="text-xs font-bold text-[#A0AEC0] uppercase">Iceberg Vault</div>
+                    <div class="text-sm font-bold text-white mt-1">Manages StETH & Daily LP Burn</div>
+                    <div class="text-[10px] text-gray-400 mt-1">Rebalances LP with Avalanche</div>
+                </div>
+
+                <div class="ice-card p-5 text-center">
+                    <div class="text-xs font-bold text-[#A0AEC0] uppercase">Transaction Fee</div>
+                    <div class="text-xl font-black text-[#00f2fe] mt-1">3.14%</div>
+                    <div class="text-[10px] text-gray-400 mt-1">Applied on Swaps & Transfers</div>
+                </div>
+
+                <div class="ice-card p-5 text-center">
+                    <div class="text-xs font-bold text-[#A0AEC0] uppercase">Avalanche Action</div>
+                    <div class="text-sm font-bold text-white mt-1">9.86% StETH to LP</div>
+                    <div class="text-[10px] text-gray-400 mt-1">21.55% LP Tokens Burned</div>
                 </div>
             </div>
 
-            <div class="text-xs text-[#A0AEC0] text-center">3.14% Protocol Fee applies to Swaps and Transfers.</div>
+            <!-- Detailed Technical Breakdown -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Minting Mechanics -->
+                <div class="ice-card p-6 space-y-3">
+                    <h3 class="text-base font-black text-[#00f2fe]">1. Minting Mechanics</h3>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        Iced Ether is not minted out of thin air—each newly minted token is backed by the ETH used to mint it. 68.6% of the ETH used to mint is converted to StETH and stored in the Iceberg. 31.4% goes directly to the LP.
+                    </p>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        Only 3.14% of the total supply can be minted in a 24-hour period to prevent continuous supply inflation, enforced with a 31.4-hour timelock.
+                    </p>
+                </div>
 
-            <button onclick="alert('Executing Swap...')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold py-3.5 rounded-xl text-sm shadow-xl hover:opacity-95 transition">
-                SWAP TOKENS
-            </button>
-        </div>
+                <!-- Avalanche System -->
+                <div class="ice-card p-6 space-y-3">
+                    <h3 class="text-base font-black text-[#00f2fe]">2. Avalanche Rebalance</h3>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        The primary purpose of the Avalanche mechanism is to rebalance the LP. An Avalanche triggers when ETH in the LP reaches 31.4% of StETH in the Iceberg.
+                    </p>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        When triggered: 9.86% of StETH in the Iceberg converts to ETH and feeds the LP, while 21.55% of all tokens in the LP are permanently burned.
+                    </p>
+                </div>
 
-        <!-- ================= BRIDGE TAB ================= -->
-        <div id="view-bridge" class="space-y-4 hidden">
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="text-xs text-[#A0AEC0] mb-2 font-bold">Bridge From</div>
-                <select class="w-full bg-[#121C2B] border border-[#233550] color-white text-sm font-bold p-2.5 rounded-lg text-white outline-none">
-                    <option>Ethereum Mainnet (Home Chain)</option>
-                    <option>Polygon</option>
-                    <option>Arbitrum One</option>
-                    <option>Base</option>
-                </select>
+                <!-- Yield Management -->
+                <div class="ice-card p-6 space-y-3">
+                    <h3 class="text-base font-black text-[#00f2fe]">3. Yield Management & Burning</h3>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        Yield from StETH accumulates in the Iceberg until a threshold of .314 ETH is hit, melting the yield directly into the LP.
+                    </p>
+                    <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                        Due to fluctuating gas costs, tokens are burned daily from the LP equal to the yield generated, preserving maximum value without high gas overhead.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 4. STATISTICS -->
+        <!-- ========================================================================= -->
+        <section id="page-stats" class="space-y-8 hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-black text-[#00f2fe]">Ecosystem Statistics</h2>
+                <p class="text-sm text-[#A0AEC0]">Live on-chain statistics tracking supply changes, melts, and avalanches.</p>
             </div>
 
-            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                <div class="text-xs text-[#A0AEC0] mb-2 font-bold">Bridge To</div>
-                <select class="w-full bg-[#121C2B] border border-[#233550] text-sm font-bold p-2.5 rounded-lg text-white outline-none">
-                    <option>Base</option>
-                    <option>Arbitrum One</option>
-                    <option>Polygon</option>
-                    <option>Ethereum Mainnet</option>
-                </select>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="ice-card p-6 text-center space-y-2">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Total Tokens Minted</div>
+                    <div class="text-2xl font-black text-[#00f2fe]">314,000,000</div>
+                    <div class="text-xs text-gray-400">ICED</div>
+                </div>
+
+                <div class="ice-card p-6 text-center space-y-2">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Total Tokens Burned</div>
+                    <div class="text-2xl font-black text-[#00f2fe]">314,000,000</div>
+                    <div class="text-xs text-gray-400">ICED</div>
+                </div>
+
+                <div class="ice-card p-6 text-center space-y-2">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Avalanched ETH</div>
+                    <div class="text-2xl font-black text-[#00f2fe]">31.4 ETH</div>
+                    <div class="text-xs text-amber-400 font-bold">2 Avalanches Triggered</div>
+                </div>
+
+                <div class="ice-card p-6 text-center space-y-2">
+                    <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Total Yield Melted</div>
+                    <div class="text-2xl font-black text-[#00f2fe]">3.14 ETH</div>
+                    <div class="text-xs text-amber-400 font-bold">10 Yield Melts Completed</div>
+                </div>
             </div>
 
-            <div class="bg-[#050B14]/60 border border-[#233550] rounded-xl p-4 text-xs text-[#CBD5E1] space-y-1">
-                <p class="font-bold text-[#00f2fe]">🌉 Bridging Mechanics:</p>
-                <p>Tokens bridged from ETH are locked in the bridge contract and minted 1:1 on the target chain. Returning tokens burns them on the destination chain and unlocks your ETH mainnet balance.</p>
+            <!-- Iceberg Growth Box -->
+            <div class="ice-card p-6 text-center max-w-lg mx-auto space-y-3">
+                <div class="text-xs font-extrabold text-[#A0AEC0] uppercase">Iceberg Growth Index</div>
+                <div class="text-4xl font-black text-[#00f2fe]">+31.4%</div>
+                <p class="text-xs text-[#CBD5E1]">Cumulative growth of StETH backing pool since contract deployment.</p>
             </div>
-
-            <button onclick="alert('Initiating Bridge...')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold py-3.5 rounded-xl text-sm shadow-xl hover:opacity-95 transition">
-                BRIDGE TOKENS
-            </button>
-        </div>
+        </section>
 
     </main>
 
+    <!-- Footer -->
+    <footer class="border-t border-[#233550] py-6 px-4 text-center text-xs text-[#A0AEC0]">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>© 2026 Iced Ether Protocol. All rights reserved.</div>
+            <div class="flex gap-4 font-semibold">
+                <a href="https://x.com/IcedEther" target="_blank" class="hover:text-[#00f2fe]">X (@IcedEther)</a>
+                <a href="#" onclick="openAboutModal()" class="hover:text-[#00f2fe]">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="fixed inset-0 bg-[#050B14]/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="ice-card p-6 max-w-md w-full space-y-4">
+            <h3 class="text-xl font-black text-[#00f2fe]">About Iced Ether</h3>
+            <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                Iced Ether is a decentralized dual liquidity pool protocol built around mathematical equilibrium, deflationary burn mechanics, and Web2 ad-revenue integration.
+            </p>
+            <button onclick="closeAboutModal()" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-bold py-2.5 rounded-xl text-xs">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Page Logic Script -->
     <script>
-        function switchTab(tab) {
-            const tabs = ['claim', 'mint', 'swap', 'bridge'];
-            tabs.forEach(t => {
-                const view = document.getElementById(`view-${t}`);
-                const tabBtn = document.getElementById(`tab-${t}`);
-                const navBtn = document.getElementById(`nav-${t}`);
-                
-                if (t === tab) {
-                    view.classList.remove('hidden');
-                    tabBtn.className = "flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] shadow-md";
-                    if(navBtn) navBtn.className = "text-[#00f2fe] font-semibold";
+        function showPage(pageId) {
+            const pages = ['portal', 'dashboard', 'tokenomics', 'stats'];
+            pages.forEach(p => {
+                const el = document.getElementById(`page-${p}`);
+                const nav = document.getElementById(`nav-${p}`);
+                if (p === pageId) {
+                    el.classList.remove('hidden');
+                    if(nav) nav.className = "text-[#00f2fe] hover:text-white transition font-bold";
                 } else {
-                    view.classList.add('hidden');
-                    tabBtn.className = "flex-1 py-2.5 text-xs font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white";
-                    if(navBtn) navBtn.className = "hover:text-white font-semibold";
+                    el.classList.add('hidden');
+                    if(nav) nav.className = "hover:text-white transition font-bold";
                 }
             });
         }
 
-        let connected = true;
+        function switchPortalTab(tabId) {
+            const tabs = ['mint', 'swap', 'bridge'];
+            tabs.forEach(t => {
+                const view = document.getElementById(`portal-${t}`);
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tabId) {
+                    view.classList.remove('hidden');
+                    btn.className = "flex-1 py-3 text-sm font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14]";
+                } else {
+                    view.classList.add('hidden');
+                    btn.className = "flex-1 py-3 text-sm font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white";
+                }
+            });
+        }
+
+        let isWalletConnected = false;
         function toggleWallet() {
-            connected = !connected;
-            const btn = document.getElementById('connectBtn');
-            btn.innerText = connected ? '0x71C7...8976F' : 'Connect Wallet';
+            isWalletConnected = !isWalletConnected;
+            const btn = document.getElementById('walletBtn');
+            btn.innerText = isWalletConnected ? '0x71C7...8976F' : 'Connect Wallet';
+        }
+
+        function openAboutModal() {
+            document.getElementById('aboutModal').style.display = 'flex';
+        }
+
+        function closeAboutModal() {
+            document.getElementById('aboutModal').style.display = 'none';
         }
     </script>
 </body>
