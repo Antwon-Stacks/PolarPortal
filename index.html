@@ -51,12 +51,12 @@
 
     <!-- Single Row Header with Hamburger Menu & Dual Logo Support -->
     <header class="border-b border-[#233550] bg-[#050B14]/95 backdrop-blur-md sticky top-0 z-50 px-4 md:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex justify-between items-center min-h-[72px]">
+        <div class="max-w-7xl mx-auto flex justify-between items-center h-12">
             
             <!-- Left: Dual Image Branding (Logo + Title PNGs with text fallbacks) -->
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer" onclick="showPage('portal')">
-                <img id="header-logo-img" src="header-logo.png" alt="ICED Logo" class="h-[72px] w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-icon').style.display='inline';">
-                <span id="logo-fallback-icon" class="text-4xl" style="display: none;">🧊</span>
+                <img id="header-logo-img" src="header-logo.png" alt="ICED Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-icon').style.display='inline';">
+                <span id="logo-fallback-icon" class="text-2xl" style="display: none;">🧊</span>
 
                 <img id="header-title-img" src="header-title.png" alt="ICED ETHER" class="h-7 w-auto object-contain hidden sm:block" onerror="this.style.display='none'; document.getElementById('title-fallback-text').style.display='inline';">
                 <span id="title-fallback-text" class="text-xl font-black tracking-wider text-[#00f2fe]">ICED ETHER</span>
@@ -146,18 +146,12 @@
                             </button>
                         </div>
 
-                        <!-- Collapsible Minting Rules -->
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
-                            <button onclick="toggleRules('mint-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
-                                <span>Minting Rules</span>
-                                <span id="mint-rules-arrow">►</span>
-                            </button>
-                            <div id="mint-rules" class="hidden space-y-3 mt-3 pt-3 border-t border-[#233550]">
-                                <p>1. Only 3.14% of the total supply can be minted in a 24-hour period.</p>
-                                <p>2. There is a 31.4-hour time lock for swaps and transfers on all newly minted tokens.</p>
-                                <p>3. 3.14% swap fee is waived.</p>
-                                <p>4. Receive a bonus 3.14% of the tokens in addition to the tokens you purchase.</p>
-                            </div>
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-3">
+                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Minting Rules</h4>
+                            <p>1. Only 3.14% of the total supply can be minted in a 24-hour period.</p>
+                            <p>2. There is a 31.4-hour time lock for swaps and transfers on all newly minted tokens.</p>
+                            <p>3. 3.14% swap fee is waived.</p>
+                            <p>4. Receive a bonus 3.14% of the tokens in addition to the tokens you purchase.</p>
                         </div>
                     </div>
                 </div>
@@ -233,19 +227,13 @@
                             </button>
                         </div>
 
-                        <!-- Collapsible Bridging Basics -->
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
-                            <button onclick="toggleRules('bridge-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
-                                <span>Bridging Basics</span>
-                                <span id="bridge-rules-arrow">►</span>
-                            </button>
-                            <div id="bridge-rules" class="hidden space-y-2.5 mt-3 pt-3 border-t border-[#233550]">
-                                <p>1. ETH is the project's home chain.</p>
-                                <p>2. When you bridge from ETH, your tokens are locked in the bridge contract.</p>
-                                <p>3. The same number of tokens that you locked are minted on the new chain.</p>
-                                <p>4. The tokens on the new chain can be traded on that chain until someone bridges them back to ETH.</p>
-                                <p>5. At that point, the tokens on the new chain are burned, and the ETH tokens are unlocked from the bridge contract.</p>
-                            </div>
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-2.5">
+                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Bridging Basics</h4>
+                            <p>1. ETH is the project's home chain.</p>
+                            <p>2. When you bridge from ETH, your tokens are locked in the bridge contract.</p>
+                            <p>3. The same number of tokens that you locked are minted on the new chain.</p>
+                            <p>4. The tokens on the new chain can be traded on that chain until someone bridges them back to ETH.</p>
+                            <p>5. At that point, the tokens on the new chain are burned, and the ETH tokens are unlocked from the bridge contract.</p>
                         </div>
                     </div>
                 </div>
@@ -254,17 +242,9 @@
                 <div id="portal-claim" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
-                            <!-- Enhanced EVM Claim Address Container with Copy Action -->
-                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 space-y-2">
-                                <div class="flex justify-between items-center text-xs text-[#A0AEC0] font-bold">
-                                    <span>EVM Claim Address</span>
-                                    <button onclick="copyClaimAddress()" class="text-[#00f2fe] hover:opacity-80 transition flex items-center gap-1 text-[11px] font-extrabold bg-[#121C2B] border border-[#233550] px-2.5 py-1 rounded-md">
-                                        <span>📋</span> <span id="copyBtnText">Copy</span>
-                                    </button>
-                                </div>
-                                <div class="flex items-center gap-2 bg-[#121C2B] border border-[#233550] rounded-lg px-3 py-2.5">
-                                    <input type="text" id="claimAddressInput" placeholder="0x... EVM Address" class="bg-transparent text-sm font-mono font-bold text-[#00f2fe] outline-none w-full">
-                                </div>
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
+                                <div class="text-xs text-[#A0AEC0] font-bold mb-2">EVM Claim Address</div>
+                                <input type="text" id="claimAddressInput" placeholder="0x... EVM Address" class="bg-transparent text-sm font-mono font-bold text-[#00f2fe] outline-none w-full border-b border-[#233550] pb-2">
                             </div>
 
                             <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
@@ -283,18 +263,12 @@
                             </button>
                         </div>
 
-                        <!-- Collapsible Claiming Rules -->
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
-                            <button onclick="toggleRules('claim-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
-                                <span>Claiming Rules</span>
-                                <span id="claim-rules-arrow">►</span>
-                            </button>
-                            <div id="claim-rules" class="hidden space-y-2.5 mt-3 pt-3 border-t border-[#233550]">
-                                <p>1. Your registered EVM address must match the receive address saved in your GlacierPlay profile.</p>
-                                <p>2. A 24-hour security cooldown applies following profile address updates to prevent sync exploits.</p>
-                                <p>3. Claimed $ICED tokens are minted directly from the reserve vault to your connected wallet.</p>
-                                <p>4. Users are responsible for network gas fees required during mainnet transaction settlement.</p>
-                            </div>
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-2.5">
+                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Claiming Rules</h4>
+                            <p>1. Your registered EVM address must match the receive address saved in your GlacierPlay profile.</p>
+                            <p>2. A 24-hour security cooldown applies following profile address updates to prevent sync exploits.</p>
+                            <p>3. Claimed $ICED tokens are minted directly from the reserve vault to your connected wallet.</p>
+                            <p>4. Users are responsible for network gas fees required during mainnet transaction settlement.</p>
                         </div>
                     </div>
                 </div>
@@ -523,7 +497,7 @@
                 </div>
             </div>
 
-            <!-- RUN THE NUMBERS SECTION -->
+            <!-- RUN THE NUMBERS SECTION (CONTAINER STYLING MATCHED TO OTHER CARDS) -->
             <div class="ice-card p-6 space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#233550] pb-4">
                     <div>
@@ -754,32 +728,6 @@
         function toggleNavMenu() {
             const dropdown = document.getElementById('nav-dropdown');
             dropdown.classList.toggle('hidden');
-        }
-
-        function toggleRules(id) {
-            const el = document.getElementById(id);
-            const arrow = document.getElementById(`${id}-arrow`);
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-                if (arrow) arrow.innerText = '▼';
-            } else {
-                el.classList.add('hidden');
-                if (arrow) arrow.innerText = '►';
-            }
-        }
-
-        function copyClaimAddress() {
-            const input = document.getElementById('claimAddressInput');
-            if (input && input.value.trim() !== '') {
-                navigator.clipboard.writeText(input.value.trim());
-                const copyText = document.getElementById('copyBtnText');
-                if (copyText) {
-                    copyText.innerText = 'Copied!';
-                    setTimeout(() => { copyText.innerText = 'Copy'; }, 2000);
-                }
-            } else {
-                alert('Please enter or connect an EVM address to copy!');
-            }
         }
 
         function showPage(pageId) {
