@@ -102,9 +102,9 @@
     <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
         <!-- ========================================================================= -->
-        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM + GLACIERPLAY FUNNEL) -->
+        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM + OPTION A FUNNEL BANNER) -->
         <!-- ========================================================================= -->
-        <section id="page-portal" class="space-y-8">
+        <section id="page-portal" class="space-y-6">
             <div class="max-w-3xl mx-auto ice-card p-6 md:p-8 glow-box">
                 
                 <!-- Sub Navigation Tabs -->
@@ -325,40 +325,33 @@
             </div>
 
             <!-- ========================================================================= -->
-            <!-- NEW: GLACIERPLAY MOBILE ARCADE FUNNEL CARD -->
+            <!-- COMPACT GLACIERPLAY FUNNEL BANNER (OPTION A INTEGRATED) -->
             <!-- ========================================================================= -->
-            <div class="max-w-3xl mx-auto ice-card p-6 border border-[#00f2fe]/40 bg-gradient-to-r from-[#050B14] via-[#121C2B] to-[#050B14] relative overflow-hidden">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    
-                    <div class="space-y-2 max-w-lg">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-[#00f2fe]/10 border border-[#00f2fe]/50 text-[#00f2fe] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                                🎮 Web2 Mobile Arcade
-                            </span>
-                            <span class="text-xs text-amber-400 font-bold">Earn Keys & Boost Backing</span>
+            <div class="max-w-3xl mx-auto ice-card p-4 border border-[#00f2fe]/30 bg-[#0A121E] rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl shrink-0">🎮</span>
+                    <div class="space-y-0.5">
+                        <div class="text-sm font-black text-white flex items-center gap-2 flex-wrap">
+                            <span>Play Games, Strengthen $ICED</span>
+                            <span class="text-[10px] bg-[#00f2fe]/10 border border-[#00f2fe]/40 text-[#00f2fe] px-2 py-0.5 rounded font-bold">Ad Revenue ➔ ETH Vault</span>
                         </div>
-                        <h3 class="text-xl font-black text-white">Download GlacierPlay Arcade</h3>
-                        <p class="text-xs text-[#CBD5E1] leading-relaxed">
-                            Play 8-Bit Track and casual arcade games on iOS & Android! Complete daily check-ins to collect Keys, unlock chests, and generate Thermal Energy that funds the Iceberg Vault.
+                        <p class="text-xs text-[#A0AEC0] leading-snug">
+                            GlacierPlay converts voluntary ad views into real protocol backing. Watching ads on mobile boosts the reserve pool for everyone.
                         </p>
                     </div>
-
-                    <!-- CTA Action Router Button & Direct Store Icons -->
-                    <div class="w-full md:w-auto flex flex-col gap-2.5 sm:flex-row md:flex-col shrink-0">
-                        <button onclick="openGlacierPlayAppStore()" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition text-center flex items-center justify-center gap-2">
-                            <span>📱 Get GlacierPlay App</span>
-                            <span>➔</span>
-                        </button>
-                        
-                        <div class="flex justify-center gap-3 text-[11px] text-[#A0AEC0] font-bold pt-1">
-                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('ios')">🍏 App Store</span>
-                            <span>•</span>
-                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('android')">🤖 Play Store</span>
-                            <span>•</span>
-                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('web')">🌐 Web Hub</span>
-                        </div>
+                </div>
+                
+                <div class="w-full sm:w-auto shrink-0 flex flex-col items-center sm:items-end gap-1.5">
+                    <button onclick="openGlacierPlayAppStore()" class="w-full sm:w-auto bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black px-4 py-2.5 rounded-lg text-xs tracking-wide shadow hover:opacity-90 transition text-center whitespace-nowrap">
+                        Get GlacierPlay ➔
+                    </button>
+                    <div class="flex justify-center gap-2 text-[10px] text-[#A0AEC0] font-bold">
+                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('ios')">🍏 iOS</span>
+                        <span>•</span>
+                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('android')">🤖 Android</span>
+                        <span>•</span>
+                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('web')">🌐 Web</span>
                     </div>
-
                 </div>
             </div>
 
@@ -808,25 +801,19 @@
 
     <!-- Master Page Logic, Device Router, & Mobile Nav Scripts -->
     <script>
-        // -------------------------------------------------------------
         // SMART DEVICE APP STORE ROUTER FOR GLACIERPLAY
-        // -------------------------------------------------------------
         function openGlacierPlayAppStore() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             
-            // Production Store URLs (Update with live IDs when published)
             const iosAppStoreUrl = "https://apps.apple.com/app/glacierplay/id123456789"; 
             const androidPlayStoreUrl = "https://play.google.com/store/apps/details?id=com.icedether.glacierplay"; 
             const webHubUrl = "https://glacierplay.app"; 
 
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                // User is on an iOS device -> Apple App Store
                 window.open(iosAppStoreUrl, '_blank');
             } else if (/android/i.test(userAgent)) {
-                // User is on an Android device -> Google Play Store
                 window.open(androidPlayStoreUrl, '_blank');
             } else {
-                // User is on Desktop or non-mobile -> Route to Web Arcade Hub
                 window.open(webHubUrl, '_blank');
             }
         }
