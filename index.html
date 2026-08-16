@@ -146,12 +146,18 @@
                             </button>
                         </div>
 
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-3">
-                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Minting Rules</h4>
-                            <p>1. Only 3.14% of the total supply can be minted in a 24-hour period.</p>
-                            <p>2. There is a 31.4-hour time lock for swaps and transfers on all newly minted tokens.</p>
-                            <p>3. 3.14% swap fee is waived.</p>
-                            <p>4. Receive a bonus 3.14% of the tokens in addition to the tokens you purchase.</p>
+                        <!-- Collapsible Minting Rules Accordion -->
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
+                            <button onclick="toggleRules('mint-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
+                                <span>Minting Rules</span>
+                                <span id="mint-rules-arrow">►</span>
+                            </button>
+                            <div id="mint-rules" class="hidden space-y-3 mt-3 pt-3 border-t border-[#233550]">
+                                <p>1. Only 3.14% of the total supply can be minted in a 24-hour period.</p>
+                                <p>2. There is a 31.4-hour time lock for swaps and transfers on all newly minted tokens.</p>
+                                <p>3. 3.14% swap fee is waived.</p>
+                                <p>4. Receive a bonus 3.14% of the tokens in addition to the tokens you purchase.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,49 +197,83 @@
                     </div>
                 </div>
 
-                <!-- BRIDGE VIEW -->
+                <!-- BRIDGE VIEW (NEW REDESIGN) -->
                 <div id="portal-bridge" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
-                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                                <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
-                                    <span>Bridge From</span>
-                                    <span>$0.00 USD</span>
+                            
+                            <!-- 1. Side-by-Side Network Dropdowns -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-[#050B14] border border-[#233550] rounded-xl p-3">
+                                    <label class="block text-[11px] text-[#A0AEC0] font-bold mb-1.5">Transfer From</label>
+                                    <select id="bridgeFromChain" onchange="updateBridgeSummary()" class="w-full bg-[#121C2B] border border-[#233550] px-3 py-2 rounded-lg text-xs font-bold text-[#00f2fe] outline-none">
+                                        <option value="Ethereum Mainnet">Ethereum Mainnet</option>
+                                        <option value="Base">Base</option>
+                                        <option value="Polygon">Polygon</option>
+                                        <option value="BNB Chain">BNB Chain</option>
+                                        <option value="Arbitrum">Arbitrum</option>
+                                    </select>
                                 </div>
-                                <div class="flex justify-between items-center gap-2">
-                                    <input type="number" placeholder="0.00" class="bg-transparent text-xl font-bold text-white outline-none w-1/2">
-                                    <select class="bg-[#121C2B] border border-[#233550] px-2 py-1.5 rounded-lg text-xs font-bold text-[#00f2fe] outline-none">
-                                        <option>ETH</option>
-                                        <option>Matic</option>
-                                        <option>Base</option>
-                                        <option>BNB</option>
+
+                                <div class="bg-[#050B14] border border-[#233550] rounded-xl p-3">
+                                    <label class="block text-[11px] text-[#A0AEC0] font-bold mb-1.5">Transfer To</label>
+                                    <select id="bridgeToChain" onchange="updateBridgeSummary()" class="w-full bg-[#121C2B] border border-[#233550] px-3 py-2 rounded-lg text-xs font-bold text-[#00f2fe] outline-none">
+                                        <option value="Base">Base</option>
+                                        <option value="Ethereum Mainnet">Ethereum Mainnet</option>
+                                        <option value="Polygon">Polygon</option>
+                                        <option value="BNB Chain">BNB Chain</option>
+                                        <option value="Arbitrum">Arbitrum</option>
                                     </select>
                                 </div>
                             </div>
 
+                            <!-- 2. $ICED Amount Input -->
                             <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
                                 <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
-                                    <span>Bridge To</span>
-                                    <span>$0.00 USD</span>
+                                    <span>Amount of $ICED to Transfer</span>
+                                    <span class="text-[#00f2fe] cursor-pointer hover:underline" onclick="document.getElementById('bridgeAmount').value='314.00'; updateBridgeSummary();">MAX: 314.00</span>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <input type="number" placeholder="0.00" readonly class="bg-transparent text-xl font-bold text-white outline-none w-1/2">
-                                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-xs font-bold text-[#00f2fe]">ICED</span>
+                                    <input type="number" id="bridgeAmount" oninput="updateBridgeSummary()" placeholder="0.00" class="bg-transparent text-2xl font-bold text-white outline-none w-2/3">
+                                    <span class="bg-[#121C2B] border border-[#233550] px-3 py-1.5 rounded-lg text-sm font-bold text-[#00f2fe]">$ICED</span>
                                 </div>
                             </div>
 
-                            <button onclick="alert('Bridge submitted!')" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black py-4 rounded-xl text-base shadow-lg hover:opacity-95 transition">
+                            <!-- 3. Clear Bridge Summary Breakdown Preview -->
+                            <div class="bg-[#050B14]/90 border border-[#00f2fe]/30 rounded-xl p-4 space-y-2 text-xs">
+                                <div class="text-[#00f2fe] font-black uppercase tracking-wider text-[11px] flex justify-between">
+                                    <span>Bridge Transaction Summary</span>
+                                    <span id="bridgeStatusBadge" class="text-emerald-400 font-bold">Ready</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-[#233550]">
+                                    <div><span class="text-[#A0AEC0]">Origin Chain:</span> <strong id="summaryFromChain" class="text-white block">Ethereum Mainnet</strong></div>
+                                    <div><span class="text-[#A0AEC0]">Destination:</span> <strong id="summaryToChain" class="text-white block">Base</strong></div>
+                                    <div><span class="text-[#A0AEC0]">Tokens Out:</span> <strong id="summaryAmount" class="text-[#00f2fe] block">0.00 $ICED</strong></div>
+                                    <div><span class="text-[#A0AEC0]">Tokens In:</span> <strong id="summaryReceive" class="text-[#00f2fe] block">0.00 $ICED</strong></div>
+                                </div>
+                                <p id="summaryMechanismText" class="text-[11px] text-gray-300 italic pt-2 border-t border-[#233550]/60 leading-relaxed">
+                                    🔒 Your tokens will be locked in the Ethereum bridge contract and minted as 1:1 wrapped $ICED on Base.
+                                </p>
+                            </div>
+
+                            <button onclick="executeBridgeSubmit()" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black py-4 rounded-xl text-base shadow-lg hover:opacity-95 transition">
                                 SUBMIT BRIDGE
                             </button>
                         </div>
 
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-2.5">
-                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Bridging Basics</h4>
-                            <p>1. ETH is the project's home chain.</p>
-                            <p>2. When you bridge from ETH, your tokens are locked in the bridge contract.</p>
-                            <p>3. The same number of tokens that you locked are minted on the new chain.</p>
-                            <p>4. The tokens on the new chain can be traded on that chain until someone bridges them back to ETH.</p>
-                            <p>5. At that point, the tokens on the new chain are burned, and the ETH tokens are unlocked from the bridge contract.</p>
+                        <!-- Collapsible Bridging Basics Accordion -->
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
+                            <button onclick="toggleRules('bridge-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
+                                <span>Bridging Basics</span>
+                                <span id="bridge-rules-arrow">►</span>
+                            </button>
+                            <div id="bridge-rules" class="hidden space-y-2.5 mt-3 pt-3 border-t border-[#233550]">
+                                <p>1. ETH is the project's home chain.</p>
+                                <p>2. When you bridge from ETH, your tokens are locked in the bridge contract.</p>
+                                <p>3. The same number of tokens that you locked are minted on the new chain.</p>
+                                <p>4. The tokens on the new chain can be traded on that chain until someone bridges them back to ETH.</p>
+                                <p>5. At that point, the tokens on the new chain are burned, and the ETH tokens are unlocked from the bridge contract.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -242,9 +282,17 @@
                 <div id="portal-claim" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
-                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
-                                <div class="text-xs text-[#A0AEC0] font-bold mb-2">EVM Claim Address</div>
-                                <input type="text" id="claimAddressInput" placeholder="0x... EVM Address" class="bg-transparent text-sm font-mono font-bold text-[#00f2fe] outline-none w-full border-b border-[#233550] pb-2">
+                            <!-- Enhanced EVM Claim Address Container with Copy Action -->
+                            <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-center text-xs text-[#A0AEC0] font-bold">
+                                    <span>EVM Claim Address</span>
+                                    <button onclick="copyClaimAddress()" class="text-[#00f2fe] hover:opacity-80 transition flex items-center gap-1 text-[11px] font-extrabold bg-[#121C2B] border border-[#233550] px-2.5 py-1 rounded-md">
+                                        <span>📋</span> <span id="copyBtnText">Copy</span>
+                                    </button>
+                                </div>
+                                <div class="flex items-center gap-2 bg-[#121C2B] border border-[#233550] rounded-lg px-3 py-2.5">
+                                    <input type="text" id="claimAddressInput" placeholder="0x... EVM Address" class="bg-transparent text-sm font-mono font-bold text-[#00f2fe] outline-none w-full">
+                                </div>
                             </div>
 
                             <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
@@ -263,12 +311,18 @@
                             </button>
                         </div>
 
-                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] space-y-2.5">
-                            <h4 class="text-[#00f2fe] font-black text-sm uppercase tracking-wider mb-2">Claiming Rules</h4>
-                            <p>1. Your registered EVM address must match the receive address saved in your GlacierPlay profile.</p>
-                            <p>2. A 24-hour security cooldown applies following profile address updates to prevent sync exploits.</p>
-                            <p>3. Claimed $ICED tokens are minted directly from the reserve vault to your connected wallet.</p>
-                            <p>4. Users are responsible for network gas fees required during mainnet transaction settlement.</p>
+                        <!-- Collapsible Claiming Rules Accordion -->
+                        <div class="bg-[#050B14]/80 border border-[#233550] rounded-xl p-5 text-xs text-[#CBD5E1] h-fit">
+                            <button onclick="toggleRules('claim-rules')" class="w-full flex justify-between items-center text-[#00f2fe] font-black text-sm uppercase tracking-wider">
+                                <span>Claiming Rules</span>
+                                <span id="claim-rules-arrow">►</span>
+                            </button>
+                            <div id="claim-rules" class="hidden space-y-2.5 mt-3 pt-3 border-t border-[#233550]">
+                                <p>1. Your registered EVM address must match the receive address saved in your GlacierPlay profile.</p>
+                                <p>2. A 24-hour security cooldown applies following profile address updates to prevent sync exploits.</p>
+                                <p>3. Claimed $ICED tokens are minted directly from the reserve vault to your connected wallet.</p>
+                                <p>4. Users are responsible for network gas fees required during mainnet transaction settlement.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -497,7 +551,7 @@
                 </div>
             </div>
 
-            <!-- RUN THE NUMBERS SECTION (CONTAINER STYLING MATCHED TO OTHER CARDS) -->
+            <!-- RUN THE NUMBERS SECTION -->
             <div class="ice-card p-6 space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#233550] pb-4">
                     <div>
@@ -728,6 +782,87 @@
         function toggleNavMenu() {
             const dropdown = document.getElementById('nav-dropdown');
             dropdown.classList.toggle('hidden');
+        }
+
+        function toggleRules(id) {
+            const el = document.getElementById(id);
+            const arrow = document.getElementById(`${id}-arrow`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (arrow) arrow.innerText = '▼';
+            } else {
+                el.classList.add('hidden');
+                if (arrow) arrow.innerText = '►';
+            }
+        }
+
+        function copyClaimAddress() {
+            const input = document.getElementById('claimAddressInput');
+            if (input && input.value.trim() !== '') {
+                navigator.clipboard.writeText(input.value.trim());
+                const copyText = document.getElementById('copyBtnText');
+                if (copyText) {
+                    copyText.innerText = 'Copied!';
+                    setTimeout(() => { copyText.innerText = 'Copy'; }, 2000);
+                }
+            } else {
+                alert('Please enter or connect an EVM address to copy!');
+            }
+        }
+
+        function updateBridgeSummary() {
+            const fromChain = document.getElementById('bridgeFromChain').value;
+            const toChain = document.getElementById('bridgeToChain').value;
+            const amountInput = document.getElementById('bridgeAmount').value;
+            const amount = parseFloat(amountInput) || 0;
+
+            const summaryFrom = document.getElementById('summaryFromChain');
+            const summaryTo = document.getElementById('summaryToChain');
+            const summaryAmt = document.getElementById('summaryAmount');
+            const summaryRec = document.getElementById('summaryReceive');
+            const summaryMechanism = document.getElementById('summaryMechanismText');
+            const badge = document.getElementById('bridgeStatusBadge');
+
+            summaryFrom.innerText = fromChain;
+            summaryTo.innerText = toChain;
+            summaryAmt.innerText = `${amount.toFixed(2)} $ICED`;
+            summaryRec.innerText = `${amount.toFixed(2)} $ICED`;
+
+            if (fromChain === toChain) {
+                badge.innerText = "Select Different Chains";
+                badge.className = "text-amber-400 font-bold";
+                summaryMechanism.innerText = "⚠️ Please select two different blockchains to initiate a cross-chain transfer.";
+                return;
+            } else {
+                badge.innerText = "Ready";
+                badge.className = "text-emerald-400 font-bold";
+            }
+
+            if (fromChain === "Ethereum Mainnet") {
+                summaryMechanism.innerText = `🔒 ${amount.toFixed(2)} $ICED will be locked in the Ethereum Bridge Vault and ${amount.toFixed(2)} wrapped $ICED will be minted on ${toChain}.`;
+            } else if (toChain === "Ethereum Mainnet") {
+                summaryMechanism.innerText = `🔥 ${amount.toFixed(2)} wrapped $ICED on ${fromChain} will be burned and ${amount.toFixed(2)} native $ICED will be unlocked on Ethereum Mainnet.`;
+            } else {
+                summaryMechanism.innerText = `🔄 Inter-chain Transfer: ${amount.toFixed(2)} $ICED on ${fromChain} will be routed via liquidity pool settlement to ${toChain}.`;
+            }
+        }
+
+        function executeBridgeSubmit() {
+            const fromChain = document.getElementById('bridgeFromChain').value;
+            const toChain = document.getElementById('bridgeToChain').value;
+            const amount = document.getElementById('bridgeAmount').value;
+
+            if (fromChain === toChain) {
+                alert("Please select different source and destination networks!");
+                return;
+            }
+
+            if (!amount || parseFloat(amount) <= 0) {
+                alert("Please enter a valid amount of $ICED to bridge!");
+                return;
+            }
+
+            alert(`✨ BRIDGE TRANSACTION BROADCAST!\n\nTransferring: ${amount} $ICED\nFrom: ${fromChain}\nTo: ${toChain}\n\nBridge lock/mint event submitted to the network.`);
         }
 
         function showPage(pageId) {
