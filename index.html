@@ -102,7 +102,7 @@
     <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
         <!-- ========================================================================= -->
-        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM + OPTION A FUNNEL BANNER) -->
+        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM) -->
         <!-- ========================================================================= -->
         <section id="page-portal" class="space-y-6">
             <div class="max-w-3xl mx-auto ice-card p-6 md:p-8 glow-box">
@@ -325,34 +325,16 @@
             </div>
 
             <!-- ========================================================================= -->
-            <!-- COMPACT GLACIERPLAY FUNNEL BANNER (OPTION A INTEGRATED) -->
+            <!-- ULTRA-SLIM GLACIERPLAY FUNNEL BAR (OPTION B INTEGRATED) -->
             <!-- ========================================================================= -->
-            <div class="max-w-3xl mx-auto ice-card p-4 border border-[#00f2fe]/30 bg-[#0A121E] rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-3">
-                    <span class="text-2xl shrink-0">🎮</span>
-                    <div class="space-y-0.5">
-                        <div class="text-sm font-black text-white flex items-center gap-2 flex-wrap">
-                            <span>Play Games, Strengthen $ICED</span>
-                            <span class="text-[10px] bg-[#00f2fe]/10 border border-[#00f2fe]/40 text-[#00f2fe] px-2 py-0.5 rounded font-bold">Ad Revenue ➔ ETH Vault</span>
-                        </div>
-                        <p class="text-xs text-[#A0AEC0] leading-snug">
-                            GlacierPlay converts voluntary ad views into real protocol backing. Watching ads on mobile boosts the reserve pool for everyone.
-                        </p>
-                    </div>
+            <div class="max-w-3xl mx-auto ice-card px-4 py-3 border border-[#233550] bg-[#0A121E] rounded-xl flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+                <div class="flex items-center gap-2 text-[#CBD5E1]">
+                    <span class="text-base">🎮</span>
+                    <span><strong>GlacierPlay Arcade:</strong> Voluntary mobile ad revenue is converted to ETH and deposited directly into the Iceberg Vault to back $ICED.</span>
                 </div>
-                
-                <div class="w-full sm:w-auto shrink-0 flex flex-col items-center sm:items-end gap-1.5">
-                    <button onclick="openGlacierPlayAppStore()" class="w-full sm:w-auto bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black px-4 py-2.5 rounded-lg text-xs tracking-wide shadow hover:opacity-90 transition text-center whitespace-nowrap">
-                        Get GlacierPlay ➔
-                    </button>
-                    <div class="flex justify-center gap-2 text-[10px] text-[#A0AEC0] font-bold">
-                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('ios')">🍏 iOS</span>
-                        <span>•</span>
-                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('android')">🤖 Android</span>
-                        <span>•</span>
-                        <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('web')">🌐 Web</span>
-                    </div>
-                </div>
+                <button onclick="openGlacierPlayAppStore()" class="shrink-0 bg-[#00f2fe]/10 border border-[#00f2fe]/50 text-[#00f2fe] hover:bg-[#00f2fe] hover:text-[#050B14] font-extrabold px-3 py-1.5 rounded-lg transition text-[11px] whitespace-nowrap shadow-sm">
+                    Get App ➔
+                </button>
             </div>
 
         </section>
@@ -816,16 +798,6 @@
             } else {
                 window.open(webHubUrl, '_blank');
             }
-        }
-
-        function openStoreDirect(target) {
-            const iosAppStoreUrl = "https://apps.apple.com/app/glacierplay/id123456789"; 
-            const androidPlayStoreUrl = "https://play.google.com/store/apps/details?id=com.icedether.glacierplay"; 
-            const webHubUrl = "https://glacierplay.app"; 
-
-            if (target === 'ios') window.open(iosAppStoreUrl, '_blank');
-            else if (target === 'android') window.open(androidPlayStoreUrl, '_blank');
-            else window.open(webHubUrl, '_blank');
         }
 
         function toggleNavMenu() {
