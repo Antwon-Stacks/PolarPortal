@@ -53,13 +53,13 @@
     <header class="border-b border-[#233550] bg-[#050B14]/95 backdrop-blur-md sticky top-0 z-50 px-4 md:px-8 py-3">
         <div class="max-w-7xl mx-auto flex justify-between items-center h-12">
             
-            <!-- Left: Dual Image Branding -->
+            <!-- Left: Dual Image Branding (Mobile Support Fixed) -->
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer" onclick="showPage('portal')">
                 <img id="header-logo-img" src="header-logo.png" alt="ICED Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-icon').style.display='inline';">
                 <span id="logo-fallback-icon" class="text-2xl" style="display: none;">🧊</span>
 
-                <img id="header-title-img" src="header-title.png" alt="ICED ETHER" class="h-7 w-auto object-contain hidden sm:block" onerror="this.style.display='none'; document.getElementById('title-fallback-text').style.display='inline';">
-                <span id="title-fallback-text" class="text-xl font-black tracking-wider text-[#00f2fe]">ICED ETHER</span>
+                <img id="header-title-img" src="header-title.png" alt="ICED ETHER" class="h-7 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('title-fallback-text').style.display='inline';">
+                <span id="title-fallback-text" class="text-xl font-black tracking-wider text-[#00f2fe]" style="display: none;">ICED ETHER</span>
             </div>
 
             <!-- Right: Action Buttons -->
@@ -107,6 +107,12 @@
         <section id="page-portal" class="space-y-6">
             <div class="max-w-3xl mx-auto ice-card p-6 md:p-8 glow-box">
                 
+                <!-- Polar Portal Header Image -->
+                <div class="flex justify-center mb-6">
+                    <img id="portal-title-img" src="PolarPortalTitle.png" alt="Polar Portal" class="h-10 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('portal-title-fallback').style.display='block';">
+                    <h2 id="portal-title-fallback" class="text-2xl md:text-3xl font-black text-[#00f2fe] text-center" style="display: none;">POLAR PORTAL</h2>
+                </div>
+
                 <!-- Sub Navigation Tabs -->
                 <div class="grid grid-cols-4 bg-[#050B14] p-1.5 rounded-xl mb-8 border border-[#233550] gap-1">
                     <button onclick="switchPortalTab('mint')" id="tab-mint" class="py-3 text-xs md:text-sm font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14]">Mint</button>
@@ -325,12 +331,13 @@
             </div>
 
             <!-- ========================================================================= -->
-            <!-- ULTRA-SLIM GLACIERPLAY FUNNEL BAR (OPTION B INTEGRATED) -->
+            <!-- ULTRA-SLIM GLACIERPLAY FUNNEL BAR (WITH GLACIERPLAY LOGO) -->
             <!-- ========================================================================= -->
             <div class="max-w-3xl mx-auto ice-card px-4 py-3 border border-[#233550] bg-[#0A121E] rounded-xl flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
-                <div class="flex items-center gap-2 text-[#CBD5E1]">
-                    <span class="text-base">🎮</span>
-                    <span><strong>GlacierPlay Arcade:</strong> Voluntary mobile ad revenue is converted to ETH and deposited directly into the Iceberg Vault to back $ICED.</span>
+                <div class="flex items-center gap-3 text-[#CBD5E1]">
+                    <img src="GlacierPlayLogo.png" alt="GlacierPlay Logo" class="h-6 w-auto object-contain shrink-0" onerror="this.style.display='none'; document.getElementById('funnel-fallback-icon').style.display='inline';">
+                    <span id="funnel-fallback-icon" class="text-base shrink-0" style="display: none;">🎮</span>
+                    <span><strong>GlacierPlay Arcade:</strong> Ad revenue is converted to ETH and Deposited into the Iceberg to Back $ICED.</span>
                 </div>
                 <button onclick="openGlacierPlayAppStore()" class="shrink-0 bg-[#00f2fe]/10 border border-[#00f2fe]/50 text-[#00f2fe] hover:bg-[#00f2fe] hover:text-[#050B14] font-extrabold px-3 py-1.5 rounded-lg transition text-[11px] whitespace-nowrap shadow-sm">
                     Get App ➔
