@@ -53,7 +53,7 @@
     <header class="border-b border-[#233550] bg-[#050B14]/95 backdrop-blur-md sticky top-0 z-50 px-4 md:px-8 py-3">
         <div class="max-w-7xl mx-auto flex justify-between items-center h-12">
             
-            <!-- Left: Dual Image Branding (Logo + Title PNGs with text fallbacks) -->
+            <!-- Left: Dual Image Branding -->
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer" onclick="showPage('portal')">
                 <img id="header-logo-img" src="header-logo.png" alt="ICED Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-icon').style.display='inline';">
                 <span id="logo-fallback-icon" class="text-2xl" style="display: none;">🧊</span>
@@ -62,13 +62,13 @@
                 <span id="title-fallback-text" class="text-xl font-black tracking-wider text-[#00f2fe]">ICED ETHER</span>
             </div>
 
-            <!-- Right: Action Buttons (Connect Wallet + Hamburger Button) -->
+            <!-- Right: Action Buttons -->
             <div class="flex items-center gap-3">
                 <button id="walletBtn" onclick="toggleWallet()" class="bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-extrabold px-4 py-2 rounded-xl shadow-lg hover:opacity-90 transition text-xs tracking-wide">
                     Connect Wallet
                 </button>
 
-                <!-- Hamburger Menu Toggle Button (3-Bar Menu) -->
+                <!-- Hamburger Menu Toggle Button -->
                 <button onclick="toggleNavMenu()" id="hamburger-btn" class="bg-[#121C2B] border border-[#233550] p-2 rounded-xl text-[#00f2fe] hover:text-white hover:border-[#00f2fe] transition focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -102,12 +102,12 @@
     <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
         <!-- ========================================================================= -->
-        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM) -->
+        <!-- 1. POLAR PORTAL (MINT / SWAP / BRIDGE / CLAIM + GLACIERPLAY FUNNEL) -->
         <!-- ========================================================================= -->
         <section id="page-portal" class="space-y-8">
             <div class="max-w-3xl mx-auto ice-card p-6 md:p-8 glow-box">
                 
-                <!-- Sub Navigation Tabs (Clean - No Emojis) -->
+                <!-- Sub Navigation Tabs -->
                 <div class="grid grid-cols-4 bg-[#050B14] p-1.5 rounded-xl mb-8 border border-[#233550] gap-1">
                     <button onclick="switchPortalTab('mint')" id="tab-mint" class="py-3 text-xs md:text-sm font-extrabold rounded-lg uppercase transition bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14]">Mint</button>
                     <button onclick="switchPortalTab('swap')" id="tab-swap" class="py-3 text-xs md:text-sm font-extrabold rounded-lg uppercase transition text-[#A0AEC0] hover:text-white">Swap</button>
@@ -197,12 +197,10 @@
                     </div>
                 </div>
 
-                <!-- BRIDGE VIEW (NEW REDESIGN) -->
+                <!-- BRIDGE VIEW -->
                 <div id="portal-bridge" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
-                            
-                            <!-- 1. Side-by-Side Network Dropdowns -->
                             <div class="grid grid-cols-2 gap-3">
                                 <div class="bg-[#050B14] border border-[#233550] rounded-xl p-3">
                                     <label class="block text-[11px] text-[#A0AEC0] font-bold mb-1.5">Transfer From</label>
@@ -227,7 +225,6 @@
                                 </div>
                             </div>
 
-                            <!-- 2. $ICED Amount Input -->
                             <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4">
                                 <div class="flex justify-between text-xs text-[#A0AEC0] font-bold mb-2">
                                     <span>Amount of $ICED to Transfer</span>
@@ -239,7 +236,6 @@
                                 </div>
                             </div>
 
-                            <!-- 3. Clear Bridge Summary Breakdown Preview -->
                             <div class="bg-[#050B14]/90 border border-[#00f2fe]/30 rounded-xl p-4 space-y-2 text-xs">
                                 <div class="text-[#00f2fe] font-black uppercase tracking-wider text-[11px] flex justify-between">
                                     <span>Bridge Transaction Summary</span>
@@ -282,7 +278,6 @@
                 <div id="portal-claim" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
-                            <!-- Enhanced EVM Claim Address Container with Copy Action -->
                             <div class="bg-[#050B14] border border-[#233550] rounded-xl p-4 space-y-2">
                                 <div class="flex justify-between items-center text-xs text-[#A0AEC0] font-bold">
                                     <span>EVM Claim Address</span>
@@ -328,6 +323,45 @@
                 </div>
 
             </div>
+
+            <!-- ========================================================================= -->
+            <!-- NEW: GLACIERPLAY MOBILE ARCADE FUNNEL CARD -->
+            <!-- ========================================================================= -->
+            <div class="max-w-3xl mx-auto ice-card p-6 border border-[#00f2fe]/40 bg-gradient-to-r from-[#050B14] via-[#121C2B] to-[#050B14] relative overflow-hidden">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    
+                    <div class="space-y-2 max-w-lg">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-[#00f2fe]/10 border border-[#00f2fe]/50 text-[#00f2fe] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                🎮 Web2 Mobile Arcade
+                            </span>
+                            <span class="text-xs text-amber-400 font-bold">Earn Keys & Boost Backing</span>
+                        </div>
+                        <h3 class="text-xl font-black text-white">Download GlacierPlay Arcade</h3>
+                        <p class="text-xs text-[#CBD5E1] leading-relaxed">
+                            Play 8-Bit Track and casual arcade games on iOS & Android! Complete daily check-ins to collect Keys, unlock chests, and generate Thermal Energy that funds the Iceberg Vault.
+                        </p>
+                    </div>
+
+                    <!-- CTA Action Router Button & Direct Store Icons -->
+                    <div class="w-full md:w-auto flex flex-col gap-2.5 sm:flex-row md:flex-col shrink-0">
+                        <button onclick="openGlacierPlayAppStore()" class="w-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-[#050B14] font-black px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition text-center flex items-center justify-center gap-2">
+                            <span>📱 Get GlacierPlay App</span>
+                            <span>➔</span>
+                        </button>
+                        
+                        <div class="flex justify-center gap-3 text-[11px] text-[#A0AEC0] font-bold pt-1">
+                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('ios')">🍏 App Store</span>
+                            <span>•</span>
+                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('android')">🤖 Play Store</span>
+                            <span>•</span>
+                            <span class="hover:text-[#00f2fe] cursor-pointer" onclick="openStoreDirect('web')">🌐 Web Hub</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </section>
 
         <!-- ========================================================================= -->
@@ -339,7 +373,6 @@
                 <p class="text-sm text-[#A0AEC0]">Real-time liquidity vault balances, yield melts, and on-chain supply metrics.</p>
             </div>
 
-            <!-- Top Cards: Reserve Pools + Progress Bars -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- StETH Iceberg Vault Card -->
                 <div class="ice-card p-6 space-y-5">
@@ -353,7 +386,6 @@
                         </span>
                     </div>
 
-                    <!-- Yield Melt Progress Bar Inside StETH Card -->
                     <div class="bg-[#050B14] p-4 rounded-xl border border-[#233550] space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-extrabold text-[#A0AEC0] uppercase">Yield Melt Status</span>
@@ -378,7 +410,6 @@
                         </span>
                     </div>
 
-                    <!-- Avalanche Trigger Progress Bar Inside LP Card -->
                     <div class="bg-[#050B14] p-4 rounded-xl border border-[#233550] space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-extrabold text-[#A0AEC0] uppercase">Avalanche Trigger Progress</span>
@@ -516,7 +547,7 @@
                 </p>
             </div>
 
-            <!-- Top Pillars (Dual Pool & Arcade Loop) -->
+            <!-- Top Pillars -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Dual Pool Engine -->
                 <div class="ice-card p-6 space-y-3">
@@ -644,7 +675,7 @@
                     </table>
                 </div>
 
-                <!-- 100k DAU View (Default Active) -->
+                <!-- 100k DAU View -->
                 <div id="dau-view-100k" class="overflow-x-auto">
                     <table class="w-full text-left text-xs text-[#CBD5E1] border-collapse">
                         <thead>
@@ -703,7 +734,7 @@
                 </div>
             </div>
 
-            <!-- Bottom Pillars (Avalanche & Minting Rules) -->
+            <!-- Bottom Pillars -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Avalanche Rebalance Mechanism -->
                 <div class="ice-card p-6 space-y-3">
@@ -740,7 +771,6 @@
 
             <!-- Yield Management & Bridging Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Yield Management -->
                 <div class="ice-card p-6 space-y-3">
                     <h3 class="text-base font-black text-[#00f2fe]">Yield Management & Gas-Optimized LP Burning</h3>
                     <p class="text-xs text-[#CBD5E1] leading-relaxed">
@@ -751,7 +781,6 @@
                     </p>
                 </div>
 
-                <!-- Bridging Basics -->
                 <div class="ice-card p-6 space-y-3">
                     <h3 class="text-base font-black text-[#00f2fe]">Cross-Chain Bridging Architecture</h3>
                     <p class="text-xs text-[#CBD5E1] leading-relaxed">
@@ -777,8 +806,41 @@
         </div>
     </footer>
 
-    <!-- Master Page Logic & Mobile Nav Scripts -->
+    <!-- Master Page Logic, Device Router, & Mobile Nav Scripts -->
     <script>
+        // -------------------------------------------------------------
+        // SMART DEVICE APP STORE ROUTER FOR GLACIERPLAY
+        // -------------------------------------------------------------
+        function openGlacierPlayAppStore() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Production Store URLs (Update with live IDs when published)
+            const iosAppStoreUrl = "https://apps.apple.com/app/glacierplay/id123456789"; 
+            const androidPlayStoreUrl = "https://play.google.com/store/apps/details?id=com.icedether.glacierplay"; 
+            const webHubUrl = "https://glacierplay.app"; 
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // User is on an iOS device -> Apple App Store
+                window.open(iosAppStoreUrl, '_blank');
+            } else if (/android/i.test(userAgent)) {
+                // User is on an Android device -> Google Play Store
+                window.open(androidPlayStoreUrl, '_blank');
+            } else {
+                // User is on Desktop or non-mobile -> Route to Web Arcade Hub
+                window.open(webHubUrl, '_blank');
+            }
+        }
+
+        function openStoreDirect(target) {
+            const iosAppStoreUrl = "https://apps.apple.com/app/glacierplay/id123456789"; 
+            const androidPlayStoreUrl = "https://play.google.com/store/apps/details?id=com.icedether.glacierplay"; 
+            const webHubUrl = "https://glacierplay.app"; 
+
+            if (target === 'ios') window.open(iosAppStoreUrl, '_blank');
+            else if (target === 'android') window.open(androidPlayStoreUrl, '_blank');
+            else window.open(webHubUrl, '_blank');
+        }
+
         function toggleNavMenu() {
             const dropdown = document.getElementById('nav-dropdown');
             dropdown.classList.toggle('hidden');
@@ -879,7 +941,6 @@
                 }
             });
 
-            // Close mobile menu dropdown after clicking an option
             document.getElementById('nav-dropdown').classList.add('hidden');
         }
 
@@ -919,7 +980,6 @@
             const btn = document.getElementById('walletBtn');
             btn.innerText = isWalletConnected ? '0x71C7...8976F' : 'Connect Wallet';
 
-            // Auto-fill connected wallet in claim tab input if connected
             const claimInput = document.getElementById('claimAddressInput');
             if (claimInput && isWalletConnected) {
                 claimInput.value = '0x71C765432109876543210987654321098768976F';
